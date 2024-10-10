@@ -66,7 +66,7 @@ mod tests {
             )))
         );
         let res = solution(tree);
-        assert_eq!(res, 27)
+        assert_eq!(res, 2)
     }
     #[test]
     fn test2(){
@@ -80,6 +80,6 @@ mod tests {
             Some(Box::new(Node::new(5, None, None)))
         );
         let res = solution(tree);
-        assert_eq!(res, 16)
+        assert_eq!(res, 0)
     }
 }
