@@ -9,6 +9,10 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "ace50bade8e6234aa140d9a2f552bbee1db4d353f69b8217bc503490fc1a9f26"
 
 [[package]]
+name = "count_nodes_path_equals_to_sub_tree"
+version = "0.1.0"
+
+[[package]]
 name = "find_first_and_last_position_of_element_in_sorted_array"
 version = "0.1.0"
 

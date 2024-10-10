@@ -1,0 +1,6 @@
+[package]
+name = "count_nodes_path_equals_to_sub_tree"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
