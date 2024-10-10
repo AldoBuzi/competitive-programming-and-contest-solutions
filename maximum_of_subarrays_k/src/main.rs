@@ -41,11 +41,6 @@ fn bst_solution(values: &Vec<i32>, k: usize){
 
 }
 
-
-fn best_solution(values: &Vec<i32>, k: usize){
-    
-}
-
 fn join_nums(nums: &[i32], sep: &str) -> String {
     // 1. Convert numbers to strings
     let str_nums: Vec<String> = nums.iter() 

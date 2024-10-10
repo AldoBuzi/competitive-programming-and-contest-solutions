@@ -1,0 +1,6 @@
+[package]
+name = "max_path_sum_between_2_leafs"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]

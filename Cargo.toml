@@ -4,4 +4,4 @@ members = [
     "maximum_of_subarrays_k",
     "trapping_rain_water", 
     "next_larger_element"
-, "social_distance", "subtree_size_of_every_node", "find_minimum_in_rotated_sorted_array", "find_first_and_last_position_of_element_in_sorted_array"]
+, "social_distance", "subtree_size_of_every_node", "find_minimum_in_rotated_sorted_array", "find_first_and_last_position_of_element_in_sorted_array", "max_path_sum_between_2_leafs"]

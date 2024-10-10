@@ -17,6 +17,10 @@ name = "find_minimum_in_rotated_sorted_array"
 version = "0.1.0"
 
 [[package]]
+name = "max_path_sum_between_2_leafs"
+version = "0.1.0"
+
+[[package]]
 name = "maximum_of_subarrays_k"
 version = "0.1.0"
 
