@@ -1,0 +1,5 @@
+- cargo add can be used to import libraries
+- cargo fmt auto format you code to a standard versione
+- cargo clippy, analyize your code and suggest changes 
+- cargo test
+- cargo doc automatically generate documentation
