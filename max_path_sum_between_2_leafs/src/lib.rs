@@ -80,4 +80,66 @@ mod tests {
         let res = solution(tree);
         assert_eq!(res, 16)
     }
+
+    #[test]
+    fn test3(){
+        let tree = Node::new(
+            -15,
+            Some(Box::new(Node::new(5, 
+                Some(Box::new(Node::new(-8, 
+                    Some(Box::new(Node::new(2, None, None))), 
+                    Some(Box::new(Node::new(-3, None, None)))
+                ))), 
+                Some(Box::new(Node::new(1, None, None)))
+            ))),
+            Some(Box::new(Node::new(6, 
+                Some(Box::new(Node::new(-9, 
+                    None,
+                    None
+                ))), 
+                Some(Box::new(Node::new(9, 
+                    None, 
+                    Some(Box::new(Node::new(-9, 
+                        Some(Box::new(Node::new(4, None, None))), 
+                        Some(Box::new(Node::new(6, 
+                            Some(Box::new(Node::new(-1, None, None))),
+                            None
+                            )))
+                    )))
+                ))) 
+            )))
+        );
+        let res = solution(tree);
+        assert_eq!(res, 2)
+    }#[test]
+    fn test4(){
+        let tree = Node::new(
+            15,
+            Some(Box::new(Node::new(5, 
+                Some(Box::new(Node::new(-8, 
+                    Some(Box::new(Node::new(2, None, None))), 
+                    Some(Box::new(Node::new(3, None, None)))
+                ))), 
+                Some(Box::new(Node::new(1, None, None)))
+            ))),
+            Some(Box::new(Node::new(6, 
+                Some(Box::new(Node::new(9, 
+                    None,
+                    None
+                ))), 
+                Some(Box::new(Node::new(9, 
+                    None, 
+                    Some(Box::new(Node::new(-9, 
+                        Some(Box::new(Node::new(4, None, None))), 
+                        Some(Box::new(Node::new(6, 
+                            Some(Box::new(Node::new(-1, None, None))),
+                            None
+                            )))
+                    )))
+                ))) 
+            )))
+        );
+        let res = solution(tree);
+        assert_eq!(res, 36)
+    }
 }
