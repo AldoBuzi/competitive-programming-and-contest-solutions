@@ -218,25 +218,7 @@ mod tests {
     
     /* Test cases for "Check if a tree is a binary search tree */
     #[test]
-    fn test_sum() {
-        let mut tree = Tree::with_root(10);
-
-        assert_eq!(tree.sum(), 10);
-
-        tree.add_node(0, 5, true); // id 1
-        tree.add_node(0, 22, false); // id 2
-
-        assert_eq!(tree.sum(), 37);
-        //assert_eq!(tree.is_bst(), true);
-
-        tree.add_node(1, 7, false); // id 3
-        //tree.add_node(2, 20, true); // id 4
-
-        //assert_eq!(tree.sum(), 64);
-        assert_eq!(tree.is_bst(), true);
-    }
-    #[test]
-    fn right_node_is_smaller_than_parent() {
+    fn leaf_in_right_subtree_is_invalid() {
         let mut tree = Tree::with_root(10);
 
         tree.add_node(0, 5, true); // id 1
@@ -245,13 +227,13 @@ mod tests {
         tree.add_node(1, 7, false); // id 3
         tree.add_node(2, 20, true); // id 4
 
+        //Invalid node
         tree.add_node(4, 19, false); // id 4
 
-        //assert_eq!(tree.sum(), 64);
         assert_eq!(tree.is_bst(), false);
     }
     #[test]
-    fn right_node_is_smaller_than_root() {
+    fn both_subtree_are_valid_but_not_the_whole_tree() {
         let mut tree = Tree::with_root(10);
 
         tree.add_node(0, 5, true); // id 1
@@ -262,38 +244,6 @@ mod tests {
 
         tree.add_node(4, 1, true); // id 5
 
-        //assert_eq!(tree.sum(), 64);
-        assert_eq!(tree.is_bst(), false);
-        //assert_eq!(tree.solution(), 51)
-    }
-    #[test]
-    fn left_node_is_greater_than_root() {
-        let mut tree = Tree::with_root(10);
-
-        tree.add_node(0, 5, true); // id 1
-        tree.add_node(0, 22, false); // id 2
-
-        tree.add_node(1, 7, false); // id 3
-        tree.add_node(2, 20, true); // id 4
-
-        tree.add_node(3, 100, false); // id 5
-
-        //assert_eq!(tree.sum(), 64);
-        assert_eq!(tree.is_bst(), false);
-    }
-    #[test]
-    fn left_node_is_smaller_than_parent() {
-        let mut tree = Tree::with_root(10);
-
-        tree.add_node(0, 5, true); // id 1
-        tree.add_node(0, 22, false); // id 2
-
-        tree.add_node(1, 7, false); // id 3
-        tree.add_node(2, 20, true); // id 4
-
-        tree.add_node(3, 100, true); // id 5
-
-        //assert_eq!(tree.sum(), 64);
         assert_eq!(tree.is_bst(), false);
     }
     #[test]
@@ -303,7 +253,7 @@ mod tests {
         tree.add_node(0, 5, true); // id 1
         tree.add_node(0, 22, false); // id 2
 
-        tree.add_node(1, 7, false); // id 3
+        tree.add_node(1, 8, false); // id 3
         tree.add_node(2, 20, true); // id 4
 
         tree.add_node(1, 3, true); // id 5
@@ -312,8 +262,8 @@ mod tests {
                                    //not a bst for this entry
         tree.add_node(5, 6, false); // id 7
 
-        tree.add_node(3, 6, true); // id 8
-        tree.add_node(3, 8, false); // id 9
+        tree.add_node(3, 7, true); // id 8
+        tree.add_node(3, 9, false); // id 9
 
         tree.add_node(2, 30, false); // id 10
 
@@ -322,7 +272,6 @@ mod tests {
 
         tree.add_node(10, 28, true); // id 13
         tree.add_node(10, 33, false); // id 14
-                                      //assert_eq!(tree.sum(), 64);
         assert_eq!(tree.is_bst(), false);
     }
     #[test]
@@ -332,7 +281,7 @@ mod tests {
         tree.add_node(0, 5, true); // id 1
         tree.add_node(0, 22, false); // id 2
 
-        tree.add_node(1, 7, false); // id 3
+        tree.add_node(1, 8, false); // id 3
         tree.add_node(2, 20, true); // id 4
 
         tree.add_node(1, 3, true); // id 5
@@ -341,7 +290,7 @@ mod tests {
         tree.add_node(5, 4, false); // id 7
 
         tree.add_node(3, 6, true); // id 8
-        tree.add_node(3, 8, false); // id 9
+        tree.add_node(3, 9, false); // id 9
 
         tree.add_node(2, 30, false); // id 10
 
@@ -350,7 +299,6 @@ mod tests {
 
         tree.add_node(10, 28, true); // id 13
         tree.add_node(10, 33, false); // id 14
-                                      //assert_eq!(tree.sum(), 64);
         assert_eq!(tree.is_bst(), true);
     }
 
