@@ -112,9 +112,11 @@ impl Tree {
         if current_node.id_left.is_none() && current_node.id_right.is_none() {
             return (current_node.key, 0);
         }
-        let (left_to_leaf, left_path) = current_node.id_left
+        let (left_to_leaf, left_path) = current_node
+            .id_left
             .map_or((0, 0), |left| self.calculate_max_path_sum(left));
-        let (right_to_leaf, right_path) = current_node.id_right
+        let (right_to_leaf, right_path) = current_node
+            .id_right
             .map_or((0, 0), |right| self.calculate_max_path_sum(right));
         (
             current_node.key + left_to_leaf.max(right_to_leaf),
@@ -129,13 +131,12 @@ impl Tree {
 mod tests {
     use super::*;
 
-
     /* For both exercises */
     #[test]
     fn only_root() {
         let tree = Tree::with_root(10);
         assert_eq!(tree.is_bst(), true);
-        assert_eq!(tree.max_path_solution(),0);
+        assert_eq!(tree.max_path_solution(), 0);
     }
 
     /* Test cases for "Max path sum" exercise */
@@ -146,14 +147,13 @@ mod tests {
         tree.add_node(0, 5, true); // id 1
         tree.add_node(0, 22, false); // id 2
 
-
         tree.add_node(1, 7, true); // id 3
         tree.add_node(1, 0, false); // id 4
-        
+
         tree.add_node(2, 0, true); // id 3
         tree.add_node(2, 24, false); // id 4
 
-        assert_eq!(tree.max_path_solution(),68)
+        assert_eq!(tree.max_path_solution(), 68)
     }
 
     #[test]
@@ -163,15 +163,13 @@ mod tests {
         tree.add_node(0, 5, true); // id 1
         tree.add_node(1, 22, true); // id 2
 
-
         tree.add_node(2, 7, true); // id 3
         tree.add_node(3, 0, true); // id 4
 
-        
         tree.add_node(4, 0, true); // id 3
         tree.add_node(5, 24, true); // id 4
 
-        assert_eq!(tree.max_path_solution(),68)
+        assert_eq!(tree.max_path_solution(), 68)
     }
     #[test]
     fn sum_is_on_the_the_furthest_leaves() {
@@ -180,15 +178,13 @@ mod tests {
         tree.add_node(0, 5, true); // id 1
         tree.add_node(0, 22, false); // id 2
 
-
         tree.add_node(1, 7, true); // id 3
         tree.add_node(1, 5, false); // id 4
 
-        
         tree.add_node(2, 10, true); // id 3
         tree.add_node(2, 24, false); // id 4
 
-        assert_eq!(tree.max_path_solution(),68)
+        assert_eq!(tree.max_path_solution(), 68)
     }
     #[test]
     fn sum_is_on_the_the_innermost_leaves() {
@@ -197,15 +193,13 @@ mod tests {
         tree.add_node(0, 5, true); // id 1
         tree.add_node(0, 22, false); // id 2
 
-
         tree.add_node(1, 7, true); // id 3
         tree.add_node(1, 5, false); // id 4
 
-        
         tree.add_node(2, 30, true); // id 3
         tree.add_node(2, 24, false); // id 4
 
-        assert_eq!(tree.max_path_solution(),76)
+        assert_eq!(tree.max_path_solution(), 76)
     }
     #[test]
     fn solution_is_on_left_children() {
@@ -214,25 +208,23 @@ mod tests {
         tree.add_node(0, 5, true); // id 1
         tree.add_node(0, 22, false); // id 2
 
-
         tree.add_node(1, 7, true); // id 3
         tree.add_node(1, 0, false); // id 4
 
         tree.add_node(3, 30, true); // id 5
         tree.add_node(3, 0, false); // id 6
 
-        
         tree.add_node(2, 10, true); // id 7
         tree.add_node(2, 0, false); // id 8
 
         tree.add_node(7, 7, true); // id 3
         tree.add_node(7, 0, false); // id 4
 
-        assert_eq!(tree.max_path_solution(),91)
+        assert_eq!(tree.max_path_solution(), 91)
     }
-    
+
     /* END of Test cases for "Max path sum" exercise */
-    
+
     /* Test cases for "Check if a tree is a binary search tree */
     #[test]
     fn leaf_in_right_subtree_is_invalid() {
