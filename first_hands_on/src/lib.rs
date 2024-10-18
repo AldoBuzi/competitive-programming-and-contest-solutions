@@ -174,7 +174,7 @@ mod tests {
         assert_eq!(tree.max_path_solution(),68)
     }
     #[test]
-    fn sum_is_on_the_the_most_far_leaves() {
+    fn sum_is_on_the_the_furthest_leaves() {
         let mut tree = Tree::with_root(10);
 
         tree.add_node(0, 5, true); // id 1
@@ -191,7 +191,24 @@ mod tests {
         assert_eq!(tree.max_path_solution(),68)
     }
     #[test]
-    fn solution_is_on_left_sub_tree() {
+    fn sum_is_on_the_the_innermost_leaves() {
+        let mut tree = Tree::with_root(10);
+
+        tree.add_node(0, 5, true); // id 1
+        tree.add_node(0, 22, false); // id 2
+
+
+        tree.add_node(1, 7, true); // id 3
+        tree.add_node(1, 5, false); // id 4
+
+        
+        tree.add_node(2, 30, true); // id 3
+        tree.add_node(2, 24, false); // id 4
+
+        assert_eq!(tree.max_path_solution(),76)
+    }
+    #[test]
+    fn solution_is_on_left_children() {
         let mut tree = Tree::with_root(10);
 
         tree.add_node(0, 5, true); // id 1
