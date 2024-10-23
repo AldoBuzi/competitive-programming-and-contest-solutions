@@ -208,8 +208,8 @@ mod tests {
         tree.add_node(2, 10, true); // id 7
         tree.add_node(2, 0, false); // id 8
 
-        tree.add_node(7, 7, true); // id 3
-        tree.add_node(7, 0, false); // id 4
+        tree.add_node(7, 7, true); // id 9
+        tree.add_node(7, 0, false); // id 10
 
         assert_eq!(tree.max_path_solution(),91)
     }
