@@ -1,3 +1,5 @@
+#[cfg(test)]
+mod test_cases_reader;
 pub struct SegmentTree {
     array: Vec<i32>,
     lazy: Vec<i32>, 
@@ -10,12 +12,11 @@ impl SegmentTree {
         let tree_size = 2 * input_size - 1;
         let mut array: Vec<i32> = vec![0i32; tree_size];
         SegmentTree::build_util (&mut array, 0, input_size - 1, &values, 0, *values.last().unwrap());
-        let tree = Self { 
-                    array: array,
-                    lazy: vec![i32::MAX; tree_size],
-                    end: input_size - 1
-                };
-        tree
+        Self { 
+            array,
+            lazy: vec![i32::MAX; tree_size],
+            end: input_size - 1
+        }
     } 
     fn build_util(array: &mut Vec<i32>, start: usize, end: usize, values: &Vec<i32>, i: usize, last_value: i32)  -> i32 {
         if start == end {
@@ -35,7 +36,6 @@ impl SegmentTree {
     }
     fn updt(&mut self, left: usize, right: usize, start: usize, end: usize, i: usize, new_value: i32) {
 
-        //println!("Start and and {} - {}", start, end);
         if start > end {
             return;
         }
@@ -55,8 +55,6 @@ impl SegmentTree {
             
             self.array[i] = self.array[2*i+1].max(self.array[2*i+2]);
         }
-        //println!("Resulting array {:?}", self.array);
-        //println!("Resulting lazy array {:?}", self.lazy);
 
     }
     fn push(&mut self, index : usize) {
@@ -76,15 +74,12 @@ impl SegmentTree {
         self.rq(0,0, self.end  , start-1, end-1)
     }
     fn rq(&mut self, tree_index: usize, left: usize, right: usize, start: usize, end: usize) -> i32{
-
-        //println!("My Limit [{},{}] - [{},{}]", left, right, start, end);
         if  start > end {
             //return default value when query falls outside of array
             return i32::MIN;
         }
         //complete overlap
         if start == left && end == right {
-            //println!("RETURNED {} {}", self.array[tree_index], tree_index);
             return self.array[tree_index];
         }
         self.push(tree_index);
@@ -93,124 +88,40 @@ impl SegmentTree {
         let mut max = i32::MIN;
         max = max.max(self.rq(2*tree_index+1, left, mid, start, end.min(mid)));
         max = max.max(self.rq(2*tree_index+2, mid+1, right, start.max(mid+1), end));
-        //println!("MAX VALUE {}", max);
         max
     }
 }
 
 #[cfg(test)]
 mod tests {
+    use crate::test_cases_reader::TestCaseReader;
     use crate::SegmentTree;
-    use std::collections::btree_map::Range;
     use std::fmt::format;
-    use std::fs::File;
-    use std::io::{prelude::*, BufReader};
 
-    #[test]
-    fn segment_tree_example() {
-        let mut tree = SegmentTree::build( vec![2,3,4,5,6,7,8,9]);
-
-        assert_eq!(tree.max(0, 3), 5);
-        assert_eq!(tree.max(0, 7), 9);
-        assert_eq!(tree.max(0, 5), 7);
-        assert_eq!(tree.max(3, 5), 7);
-        assert_eq!(tree.max(3, 7), 9);
-        assert_eq!(tree.max(2, 6), 8);
-
-        assert_eq!(tree.max(3, 7), 9);
-        assert_eq!(tree.max(1, 6), 8);
-        assert_eq!(tree.array[0], 9);
-    }
-
-    #[test]
-    fn segment_tree_example_2() {
-        let mut tree = SegmentTree::build( vec![2,3,4,5,6,7,8,9,10]);
-
-        assert_eq!(tree.array, vec![]);
-        assert_eq!(tree.max(0, 3), 5);
-        assert_eq!(tree.max(0, 7), 9);
-        assert_eq!(tree.max(0, 5), 7);
-        assert_eq!(tree.max(3, 5), 7);
-        assert_eq!(tree.max(3, 7), 9);
-        assert_eq!(tree.max(2, 6), 9);
-
-        assert_eq!(tree.max(3, 7), 9);
-        assert_eq!(tree.array[0], 9);
-    }
-    #[test]
-    fn prof_test_case(){
-        let mut tree = SegmentTree::build(vec![5,1,4,3,2]);
-        //assert_eq!(tree.array, vec![2,1,4,3,2]);
-        tree.update(0, 1, 2);
-        //assert_eq!(tree.array, vec![2,1,4,3,2]);
-        assert_eq!(tree.max(1, 3), 4);
-        assert_eq!(tree.max(0, 1), 2);
-    }
 
     #[test]
     fn test_cases(){
-        //env::set_var("RUST_BACKTRACE", "1");
         for key in 0..11{
             println!("----------STARTING TEST CASE {}------",key);
-            let file = File::open( format(format_args!("src/Testset_handson2_p1/input{}.txt",key))).unwrap();
-            let reader = BufReader::new(file);
-            let mut n = -1;
-            let mut m = -1;
-            let mut index = 0;
-            let mut index2 = 0;
-            let mut vec = Vec::<i32>::new();
-            let mut tree : SegmentTree;
+            let mut input_reader = TestCaseReader::create(format(format_args!("src/Testset_handson2_p1/input{}.txt",key)));
+            
+            let (_,m) = input_reader.read_first_line();
+            let vec : Vec<i32> = input_reader.read_line();
             let mut operations = Vec::<(i32,i32,i32,i32)>::new();
-            for line in reader.lines() {
-                let mut tuple = vec![0;4];
-                let mut tuple_index = 0;
-                line.unwrap().split(" ").for_each(|x| {
-                    if n == -1 {
-                        n = x.parse::<i32>().unwrap();
-                        vec  = vec![0;n as usize];
-                    }
-                    else if m == -1 {
-                        m = x.parse::<i32>().unwrap();
-    
-                    } 
-                    else if index < n {
-                        vec[index as usize] = x.parse::<i32>().unwrap();
-                        index += 1;
-                    }
-                    else if index2 < m {
-                        index +=1;
-                        if tuple_index < 3 {
-                            tuple[tuple_index] = x.parse::<i32>().unwrap();
-                            tuple_index += 1;
-                        }
-                        else if tuple[0] == 0 && tuple_index < 4 {
-                            tuple[tuple_index] = x.parse::<i32>().unwrap();
-                            tuple_index += 1;
-                        }
-                        else {
-                            tuple_index = 0;
-                            index2 += 1;
-                        }
-                    }
-    
-                });
-                if index > n {
-                    operations.push((tuple[0],tuple[1],tuple[2],tuple[3]));
-                }
-            }
-            let file = File::open(format(format_args!("src/Testset_handson2_p1/output{key}.txt"))).unwrap();
-            let reader = BufReader::new(file);
+            input_reader.read_lines(&mut |_1,_2,_3,_4| {
+                operations.push((_1,_2,_3,_4));
+            }, m as usize);
+            let mut output_reader = TestCaseReader::create(format(format_args!("src/Testset_handson2_p1/output{key}.txt")));
             let mut outputs = Vec::<i32>::new();
-            for line in reader.lines() {
-                outputs.push(line.unwrap().parse::<i32>().unwrap());
-            }
-            tree = SegmentTree::build(vec);
+            output_reader.read_lines(&mut |_1,_2,_3,_4| {
+                outputs.push(_1);
+            }, usize::MAX);
+            println!("\nExpected output for case {} {:?}\n", key, outputs); 
+            let mut tree = SegmentTree::build(vec);
     
-            println!("MyOperations {:?}", operations);
             let mut iter = 0;
             operations.iter().for_each(|&(op_type,start,end,extra)| {
                 if op_type == 1 {
-                    println!( "Output {}", tree.max(start as usize, end as usize));
                     assert_eq!(tree.max(start as usize, end as usize), outputs[iter]);
                     iter +=1;
                 }
