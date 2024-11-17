@@ -1,10 +1,10 @@
-use std::collections::HashMap;
+use std::collections::{HashSet};
 
 #[cfg(test)]
 mod test_cases_reader;
 
 pub struct SegmentTree {
-    array: Vec<HashMap<usize, usize>>,
+    array: Vec<HashSet<usize>>,
     end: usize
 }
 
@@ -31,7 +31,7 @@ impl SegmentTree {
             if *elem == 0{ *elem = last_encountered; }
             else { last_encountered = *elem; } 
         });
-        let mut array = vec![HashMap::new(); tree_size];
+        let mut array = vec![HashSet::new(); tree_size];
         SegmentTree::build_util (&mut array, 0, input_size - 1, &sweep_line, 0, *sweep_line.last().unwrap());
         Self { 
             array,
@@ -39,11 +39,11 @@ impl SegmentTree {
         }
         
     } 
-    fn build_util(array: &mut Vec<HashMap<usize,usize>>, start: usize, end: usize, values: &Vec<usize>, i: usize, dummy: usize)  -> HashMap<usize,usize> {
+    fn build_util(array: &mut Vec<HashSet<usize>>, start: usize, end: usize, values: &Vec<usize>, i: usize, dummy: usize)  -> HashSet<usize> {
         if start == end {
             //fill extra empty space with last value of sweep line
             let value = if end < values.len() { values[end] } else { dummy };
-            array[i].insert(value, 1);
+            array[i].insert(value);
             return array[i].clone();
         }
         let mid = start + ( end - start) / 2;
