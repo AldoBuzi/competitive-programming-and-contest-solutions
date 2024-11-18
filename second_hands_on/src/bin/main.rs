@@ -18,19 +18,21 @@ pub fn main() {
     if args.len() == 1 {
         println!("No path has been provided, using default ones");
         println!("To use customized paths provide: base_path_ex1 number_of_files_for_ex1 base_path_ex2 number_of_files_for_ex2");
-    }
-    else if args.len() == 5 {
+    } else if args.len() == 5 {
         path_ex1 = &args[1];
         number_of_files_ex1 = args[2].parse::<usize>().unwrap();
         path_ex2 = &args[3];
         number_of_files_ex2 = args[4].parse::<usize>().unwrap();
-    }
-    else {
+    } else {
         panic!("Error related to args passed in command line");
     }
-    test_cases_ex1(path_ex1.to_string(),number_of_files_ex1);
-    test_cases_ex2(path_ex2.to_string(),number_of_files_ex2);
+    test_cases_ex1(path_ex1.to_string(), number_of_files_ex1);
+    test_cases_ex2(path_ex2.to_string(), number_of_files_ex2);
 }
+
+/*
+ Test Cases for first exercise 
+*/
 
 fn test_cases_ex1(path: String, number_of_files: usize) {
     for key in 0..number_of_files {
@@ -47,9 +49,8 @@ fn test_cases_ex1(path: String, number_of_files: usize) {
             },
             m as usize,
         );
-        let mut output_reader = TestCaseReader::create(format(format_args!(
-            "src/Testset_handson2_p1/output{key}.txt"
-        )));
+        let mut output_reader =
+            TestCaseReader::create(format(format_args!("{path}output{key}.txt")));
         let mut outputs = Vec::<i32>::new();
         output_reader.read_lines(
             &mut |_1, _2, _3, _4| {
@@ -72,6 +73,11 @@ fn test_cases_ex1(path: String, number_of_files: usize) {
     }
 }
 
+/*
+ Test Cases for second exercise 
+*/
+
+
 fn test_cases_ex2(path: String, number_of_files: usize) {
     for key in 0..number_of_files {
         println!("----------STARTING TEST CASE {}----------", key);
@@ -92,9 +98,8 @@ fn test_cases_ex2(path: String, number_of_files: usize) {
             },
             m as usize,
         );
-        let mut output_reader = TestCaseReader::create(format(format_args!(
-            "src/Testset_handson2_p2/output{key}.txt"
-        )));
+        let mut output_reader =
+            TestCaseReader::create(format(format_args!("{path}output{key}.txt")));
         let mut outputs = Vec::<usize>::new();
         output_reader.read_lines(
             &mut |_1, _2, _3, _4| {
@@ -112,6 +117,11 @@ fn test_cases_ex2(path: String, number_of_files: usize) {
         });
     }
 }
+
+
+/*
+ Used to read from input and output files 
+*/
 
 pub struct TestCaseReader {
     reader: BufReader<File>,
