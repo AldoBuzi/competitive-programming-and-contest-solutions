@@ -16,7 +16,7 @@ pub fn main() {
     let mut path_ex2 = "src/Testset_handson2_p2/";
     let mut number_of_files_ex2 = 8usize;
     if args.len() == 1 {
-        println!("No path has been provided, using default ones");
+        println!("No path has been provided, using default ones, assuming files are placed under src folder of cargo project");
         println!("To use customized paths provide: base_path_ex1 number_of_files_for_ex1 base_path_ex2 number_of_files_for_ex2");
     } else if args.len() == 5 {
         path_ex1 = &args[1];
@@ -31,7 +31,7 @@ pub fn main() {
 }
 
 /*
- Test Cases for first exercise 
+ Test Cases for first exercise
 */
 
 fn test_cases_ex1(path: String, number_of_files: usize) {
@@ -74,9 +74,8 @@ fn test_cases_ex1(path: String, number_of_files: usize) {
 }
 
 /*
- Test Cases for second exercise 
+ Test Cases for second exercise
 */
-
 
 fn test_cases_ex2(path: String, number_of_files: usize) {
     for key in 0..number_of_files {
@@ -118,9 +117,9 @@ fn test_cases_ex2(path: String, number_of_files: usize) {
     }
 }
 
-
 /*
- Used to read from input and output files 
+ Used to read from input and output files
+ It's awuful code but I wrote it quickly just to read the test cases
 */
 
 pub struct TestCaseReader {
