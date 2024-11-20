@@ -145,10 +145,8 @@ impl Ex1SegmentTree {
         self.push(tree_index);
         //partial overlap cases
         let mid = left + (right - left) / 2;
-        let mut max = i32::MIN;
-        max = max.max(self.rq(2 * tree_index + 1, left, mid, start, end.min(mid)));
-        max = max.max(self.rq(2 * tree_index + 2, mid + 1, right, start.max(mid + 1), end));
-        max
+        self.rq(2 * tree_index + 1, left, mid, start, end.min(mid))
+            .max(self.rq(2 * tree_index + 2, mid + 1, right, start.max(mid + 1), end))
     }
 }
 
@@ -250,16 +248,14 @@ impl Ex2SegmentTree {
         }
         //partial overlap cases
         let mid = left + (right - left) / 2;
-        let mut max = 0;
-        max = max.max(self.rq(2 * tree_index + 1, left, mid, start, end.min(mid), k));
-        max = max.max(self.rq(
-            2 * tree_index + 2,
-            mid + 1,
-            right,
-            start.max(mid + 1),
-            end,
-            k,
-        ));
-        max
+        self.rq(2 * tree_index + 1, left, mid, start, end.min(mid), k)
+            .max(self.rq(
+                2 * tree_index + 2,
+                mid + 1,
+                right,
+                start.max(mid + 1),
+                end,
+                k,
+            ))
     }
 }
