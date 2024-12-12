@@ -10,15 +10,17 @@ pub fn solution(m: usize, matrix: Vec<Vec<i32>>) -> i32 {
                 result[index_col] = row_sum;
             } else {
                 let mut sum = 0;
+                let mut max = 0;
                 for (index_key, key) in row.iter().enumerate() {
                     sum += *key;
                     if index_key >= index_col {
                         break;
                     }
                     let index: usize = index_col - index_key - 1;
-                    result[index_col] = result[index_col].max(temporay[index] + sum)
+                    max = max.max(temporay[index] + sum)
                 }
-                result[index_col] = temporay[index_col].max(result[index_col].max(sum));
+                // max (cell above, row sum, max (all combinations of prefix and solution on the cell above) )
+                result[index_col] = temporay[index_col].max(max).max(sum);
             }
         }
         temporay = result.clone();
@@ -30,14 +32,22 @@ pub fn solution2(pairs: &mut [(usize, usize)]) -> usize {
     if pairs.is_empty() {
         return 0;
     }
+    //solve first requirement about increasing difficulties
+    //After this, the problem is reduced to solve a "longest increasing subsequence(LIS)" problem
     pairs.sort_unstable_by_key(|&x| x.1);
     let mut res = Vec::<(usize, usize)>::new();
     res.push(pairs[0]);
     // for in range 1..pairs.len()
     for &pair in pairs.iter().skip(1) {
-        if pair.0 > res.last().unwrap().0 && pair.1 > res.last().unwrap().1 {
+        // pair.1's difficulty is alwasy greater or equal than the second one
+        // I added this to avoid cases like (50,10) compared against (40,10)
+        // We don't want to add 50 at all.
+        let last = res.last().unwrap();
+        if pair.0 > last.0 && pair.1 != last.1 {
             res.push(pair);
-        } else {
+        }
+        // this if avoids adding (50,10), but allows adding an item such as (30,10)
+        else if pair.0 <= last.0 {
             let mut low = 0;
             let mut high = res.len() - 1;
             while low < high {
@@ -48,7 +58,7 @@ pub fn solution2(pairs: &mut [(usize, usize)]) -> usize {
                     high = mid;
                 }
             }
-            res[low] = pair
+            res[low] = pair;
         }
     }
     res.len()

@@ -60,7 +60,7 @@ fn test_cases_ex1(path: String, number_of_files: usize) {
             1,
             1,
         );
-        println!("Expected output for case {}: {:?}\n", key, output);
+        println!("Expected output: {:?}\n", output);
         let res = solution(m as usize, matrix);
         assert_eq!(res, output);
     }
@@ -96,7 +96,7 @@ fn test_cases_ex2(path: String, number_of_files: usize) {
         );
         println!("Expected output: {:?}\n", output);
         let res = solution2(&mut matrix);
-        assert_eq!(res as i32, output);
+        assert_eq!(res as i32, output, "Testing failed for {} and {}", res, output);
     }
 }
 
