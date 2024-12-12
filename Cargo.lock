@@ -25,6 +25,10 @@ name = "first_hands_on"
 version = "0.1.0"
 
 [[package]]
+name = "hands_on_3"
+version = "0.1.0"
+
+[[package]]
 name = "max_path_sum_between_2_leafs"
 version = "0.1.0"
 
